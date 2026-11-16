@@ -3,7 +3,6 @@ import SwiftUI
 /// Grid view displaying Apollo missions in an adaptive scrolling grid.
 struct MissionGridView: View {
     let missions: [Mission]
-    let astronauts: [String: Astronaut]
 
     let columns = [
         GridItem(.adaptive(minimum: 150))
@@ -13,14 +12,21 @@ struct MissionGridView: View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(missions) { mission in
-                    NavigationLink {
-                        MissionView(mission: mission, astronauts: astronauts)
-                    } label: {
+                    NavigationLink(value: mission) {
                         MissionGridCell(mission: mission)
                     }
                 }
             }
             .padding([.horizontal, .bottom])
         }
+    }
+}
+
+#Preview {
+    let missions: [Mission] = Bundle.main.decode("missions.json")
+
+    return NavigationStack {
+        MissionGridView(missions: missions)
+            .preferredColorScheme(.dark)
     }
 }

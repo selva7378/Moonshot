@@ -15,9 +15,7 @@ struct MissionCrewView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(crew, id: \.role) { crewMember in
-                    NavigationLink {
-                        AstronautView(astronaut: crewMember.astronaut)
-                    } label: {
+                    NavigationLink(value: crewMember.astronaut) {
                         CrewMemberCard(astronaut: crewMember.astronaut, role: crewMember.role)
                     }
                 }

@@ -3,14 +3,11 @@ import SwiftUI
 /// List view displaying Apollo missions in a vertical list.
 struct MissionListView: View {
     let missions: [Mission]
-    let astronauts: [String: Astronaut]
 
     var body: some View {
         List {
             ForEach(missions) { mission in
-                NavigationLink {
-                    MissionView(mission: mission, astronauts: astronauts)
-                } label: {
+                NavigationLink(value: mission) {
                     MissionListRow(mission: mission)
                 }
                 .listRowBackground(Color.darkBackground)
@@ -19,5 +16,14 @@ struct MissionListView: View {
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
+    }
+}
+
+#Preview {
+    let missions: [Mission] = Bundle.main.decode("missions.json")
+
+    return NavigationStack {
+        MissionListView(missions: missions)
+            .preferredColorScheme(.dark)
     }
 }
